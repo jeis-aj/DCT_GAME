@@ -17,11 +17,11 @@ class node {
 	private:
 		int led_pin , sensor_pin ;
 		int state = false;		// LED light off
-		int rand_on_time_minimum = 500;
-		int rand_on_time_deviation = 500;
+		int min_on_time = 500;
+		int max_on_time = 1000;
 
-		int rand_off_time_minimum = 500;
-		int rand_off_time_deviation = 500;
+		int min_off_time = 500;
+		int max_off_time = 1000;
 		unsigned long int on_time;
 		unsigned long int off_time;
 	public:

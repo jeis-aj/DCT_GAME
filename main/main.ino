@@ -41,13 +41,13 @@ void node::update(void){
 	long int time  = millis();
 	if ( state && on_time < time ){
 		// led off time duration randomly sets,  every time turns off
-		off_time = rand_off_time_minimum + rand() % rand_off_time_deviation ;	
+		off_time = random(min_off_time, max_off_time );
 		state = false;					// turn off led == status false
 		digitalWrite( led_pin, 	HIGH   );		// turn off led
 	}
 	if ( !state && on_time < time ){
 		// led on time duration randomly sets,  every time turns on 
-		on_time = rand_on_time_minimum + rand() % rand_on_time_deviation ;
+		on_time = random(min_on_time, max_on_time );
 		state = true ;					// turn on led == status true
 		digitalWrite( led_pin, 	LOW	);		// turn on led
 	}
