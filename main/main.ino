@@ -11,41 +11,15 @@
  *
  */
 
-#include "main.h"
 #include <time.h> 
+#include "main.h"
 
-class node {
-	private:
-		int led_pin , sensor_pin ;
-		int state = false;		// LED light off
-		int rand_on_time_minimum = 500;
-		int rand_on_time_deviation = 500;
-
-		int rand_off_time_minimum = 500;
-		int rand_off_time_deviation = 500;
-	public:
-		unsigned long int on_time;
-		unsigned long int off_time;
-
-	node(int led_pin , int sensor_pin ) {
-		this->led_pin = led_pin;
-		this->sensor_pin = sensor_pin;
-		digitalWrite( led_pin, 	HIGH   );	// led ON
-		pinMode(   led_pin, 	OUTPUT );
-		pinMode(   sensor_pin , INPUT  );
-	}
-	/* node(void); */
-	// update function update led on/off for random time
-	void update(void);
-};
-
-int sensor_arr [9] = { 1,2,3,4,5,6,7,8,9 };
-int led_arr [9] = { 11, 12, 13, 14, 15, 16, 17, 18,19 };
 
 int max_index = sizeof(sensor_arr)/sizeof(sensor_arr[0]);		// max node count 
 class node *node_ptr;
 
 void setup(){
+	pinMode (reset_btn , INPUT_PULLUP);
 	for( int index = 0; index < max_index ; ++index  ){
 		int sensor_pin = sensor_arr[index]	;
 		int led_pin = led_arr[index]	;
@@ -53,10 +27,14 @@ void setup(){
 	}
 }
 
+
 void loop(){
-		for ( int index = 0 ; index < max_index ; ++index ){
-			node_ptr[index].update();					// update led status (toggle random time)
-		}
+	for ( int index = 0 ; index < max_index ; ++index ){
+		if (reset_btn == 0){
+			return; }
+		node_ptr[index].update();					// update led status (toggle random time)
+		node_ptr[index].shot_check(1);					// update score if shot on target
+	}
 }
 
 void node::update(void){
@@ -75,6 +53,18 @@ void node::update(void){
 	}
 }
 
-int main(){
-	return 0;
+bool  node::shot_check(int trigger){
+	if ( trigger && state){
+		state = false;					// turn off led == status false
+		digitalWrite( led_pin, 	HIGH   );		// turn off led
+		return 1; }
+	return 0;	
+}
+
+node::node(int led_pin , int sensor_pin ) {
+	this->led_pin = led_pin;
+	this->sensor_pin = sensor_pin;
+	digitalWrite( led_pin, 	HIGH   );	// led ON
+	pinMode(   led_pin, 	OUTPUT );
+	pinMode(   sensor_pin , INPUT  );
 }
