@@ -31,23 +31,29 @@ class node {
 		pinMode(   led_pin, 	OUTPUT );
 		pinMode(   sensor_pin , INPUT  );
 	}
-	/*
-	* update function update led on/off for random time
-	*
-	*/
+	/* node(void); */
+	// update function update led on/off for random time
 	void update(void);
 };
 
 int sensor_arr [9] = { 1,2,3,4,5,6,7,8,9 };
 int led_arr [9] = { 11, 12, 13, 14, 15, 16, 17, 18,19 };
 
+int max_index = sizeof(sensor_arr)/sizeof(sensor_arr[0]);		// max node count 
+class *node node_ptr;
+
 void setup(){
-	node_matrix[[]] ; 
-	for(  )
+	for( int index = 0; index < max_index ; ++index  ){
+		int sensor_pin = sensor_arr[index]	;
+		int led_pin = led_arr[index]	;
+		node_ptr[index] = new node (led_pin, sensor_pin);
+	}
 }
 
 void loop(){
-
+		for ( int index = 0 ; index < max_index ; ++index ){
+			node_ptr[index].update();					// update led status (toggle random time)
+		}
 }
 
 void node::update(void){
@@ -61,9 +67,11 @@ void node::update(void){
 	if ( !state && on_time < time ){
 		// led on time duration randomly sets,  every time turns on 
 		on_time = rand_on_time_minimum + rand() % rand_on_time_deviation ;
-		state = false;
+		state = true ;					// turn on led == status true
 		digitalWrite( led_pin, 	LOW	);		// turn on led
 	}
 }
 
-
+int main(){
+	return 0;
+}
