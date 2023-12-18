@@ -19,6 +19,7 @@ int max_index = sizeof(sensor_arr)/sizeof(sensor_arr[0]);		// max node count
 class node *node_ptr;
 
 void setup(){
+	ir_setup();
 	Serial.begin(9600);
 	pinMode (reset_btn , INPUT_PULLUP);
 	for( int index = 0; index < max_index ; ++index  ){
@@ -76,8 +77,3 @@ node::node(int led_pin , int sensor_pin ) {
 }
 
 
-bool detect_shot(void){
-#define SecretKey "blah..blah"
-	String key;
-	return ( key == SecretKey );
-}

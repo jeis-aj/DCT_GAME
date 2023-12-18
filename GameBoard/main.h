@@ -31,8 +31,8 @@ class node {
 		void update(void);
 		bool  shot_check(int trigger);
 };
-bool detect_shot();
-
+bool detect_shot(void);
+void ir_setup(void);
 
 /* --------------------------------------------------------------------------------- */
 /* SCALABLE PARAMETERS */
