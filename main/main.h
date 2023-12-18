@@ -12,7 +12,7 @@
  */
 
 
-void setup(void);
-void loop(void);
-void digitalWrite( int , 	int );	// led ON
-pinMode(   int , 	int);
+/* void setup(void); */
+/* void loop(void); */
+/* void digitalWrite( int , 	int );	// led ON */
+/* pinMode(   int , 	int); */

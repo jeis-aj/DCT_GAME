@@ -16,6 +16,7 @@
 
 class node {
 	private:
+		int led_pin , sensor_pin ;
 		int state = false;		// LED light off
 		int rand_on_time_minimum = 500;
 		int rand_on_time_deviation = 500;
@@ -27,6 +28,8 @@ class node {
 		unsigned long int off_time;
 
 	node(int led_pin , int sensor_pin ) {
+		this->led_pin = led_pin;
+		this->sensor_pin = sensor_pin;
 		digitalWrite( led_pin, 	HIGH   );	// led ON
 		pinMode(   led_pin, 	OUTPUT );
 		pinMode(   sensor_pin , INPUT  );
@@ -40,13 +43,13 @@ int sensor_arr [9] = { 1,2,3,4,5,6,7,8,9 };
 int led_arr [9] = { 11, 12, 13, 14, 15, 16, 17, 18,19 };
 
 int max_index = sizeof(sensor_arr)/sizeof(sensor_arr[0]);		// max node count 
-class *node node_ptr;
+class node *node_ptr;
 
 void setup(){
 	for( int index = 0; index < max_index ; ++index  ){
 		int sensor_pin = sensor_arr[index]	;
 		int led_pin = led_arr[index]	;
-		node_ptr[index] = new node (led_pin, sensor_pin);
+		node_ptr[index] = node(led_pin, sensor_pin);
 	}
 }
 
