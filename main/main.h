@@ -31,7 +31,7 @@ class node {
 		void update(void);
 		bool  shot_check(int trigger);
 };
-
+bool detect_shot();
 
 
 /* --------------------------------------------------------------------------------- */
