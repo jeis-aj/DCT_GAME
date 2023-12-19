@@ -12,7 +12,7 @@
 
 IRsend irsend;
 
-const int max_attempt_count = 8;		 // Max attempt for a person
+const int max_attempt_count = 9;		 // Max attempt for a person
 const int trigger_pin = 2;			// Trigger button pin
 int Reloading_ledPin = 13;			// Reloading LED Indicator 
 int led_arr[max_attempt_count] = {4,5,6,7,8,9,10,11,12};			// led pins
@@ -26,9 +26,15 @@ void setup()
 }
 
 int count = 0 ;
+int prev_state = true, curr_state = false;
+
 void loop() {
-	if ( digitalRead(trigger_pin) == HIGH) 
+	curr_state = digitalRead(trigger_pin) == HIGH;
+	if ( !curr_state && prev_state == curr_state )
 		return;
+	else
+		delay(100);
+	prev_state = curr_state;
 
 	if ( count < max_attempt_count  ){
 		digitalWrite( Reloading_ledPin, LOW);
@@ -40,11 +46,11 @@ void loop() {
 	}
 	else{
 		/*
-		for(int led_pin: led_arr){
-			digitalWrite( led_pin, HIGH);
-			delay(1000);		// 10 seconds Reloading delay
-		}
-		*/
+		   for(int led_pin: led_arr){
+		   digitalWrite( led_pin, HIGH);
+		   delay(1000);		// 10 seconds Reloading delay
+		   }
+		 */
 
 		digitalWrite( Reloading_ledPin, HIGH );
 		Serial.println("Reloading....");
@@ -57,12 +63,12 @@ void loop() {
 void reload_animation(void) {
 	for ( int count = 0; count < max_animation_count ; ++count ){
 		for(int led_pin: led_arr){
-			digitalWrite( led_pin, HIGH);
+			digitalWrite( led_pin, LOW);
 			delay(100);
 		}
-			delay(400);
+		delay(400);
 		for(int led_pin: led_arr){
-			digitalWrite( led_pin, LOW);
+			digitalWrite( led_pin, HIGH);
 			delay(100);
 		}
 	}
