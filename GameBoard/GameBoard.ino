@@ -21,7 +21,7 @@ class node *node_ptr = malloc( sizeof(node)*max_index );		// mem alloc for node 
 
 void setup(){
 	pinMode( scoredIndicator, OUTPUT);
-	Serial.begin(9600);
+	Serial.begin(115200);
 	pinMode (reset_btn , INPUT_PULLUP);
 	for( int index = 0; index < max_index ; ++index  ){
 		int sensor_pin = sensor_arr[index]	;
@@ -34,7 +34,8 @@ void setup(){
 
 int score = 0;
 void loop(){
-	for ( int index = 0 ; index < max_index ; ++index ){
+		// update led status (toggle random time)
+		for ( int index = 0 ; index < max_index ; ++index ){
 		if (reset_btn == 0){
 			score = 0;
 			return; }
@@ -48,21 +49,22 @@ void loop(){
 			digitalWrite( scoredIndicator, HIGH );
 		}
 	}
-	Serial.print("Score: ");
-	Serial.println(score);
+	/* Serial.print("Score: "); */
+	/* Serial.println(score); */
 }
 
 void node::update(void){
-	long int time  = millis();
-	if ( state && on_time < time ){
+	unsigned long int time  = millis();
+	/* Serial.println(on_time); */
+	if ( state &&  on_time < time ){
 		// led off time duration randomly sets,  every time turns off
-		off_time = random(min_off_time, max_off_time );
+		off_time = time + random(min_off_time, max_off_time );
 		state = false;					// turn off led == status false
 		digitalWrite( led_pin, 	HIGH   );		// turn off led
 	}
-	if ( !state && on_time < time ){
+	if ( !state && off_time < time ){
 		// led on time duration randomly sets,  every time turns on 
-		on_time = random(min_on_time, max_on_time );
+		on_time = time + random(min_on_time, max_on_time );
 		state = true ;					// turn on led == status true
 		digitalWrite( led_pin, 	LOW	);		// turn on led
 	}
@@ -83,11 +85,17 @@ bool node::detect_shot(void){
 	if (irrecv_ptr->decode(&results)){
 		Serial.println(results.value, HEX);				// prints received value 
 		irrecv_ptr->resume();
-		bool trigger = results.value == SecretKey ;
+		bool trigger = (results.value == SecretKey);
 		if ( trigger && state){
 			state = false;					// turn off led == status false
-			digitalWrite( led_pin, 	HIGH   );		// turn off led
-			return trigger;
+			digitalWrite( led_pin, 	LOW);		// turn off led
+			Serial.println("shot on target");				// prints received value 
+			return true;
 		}
+		else{
+			delay(100);
+			/* digitalWrite( led_pin, 	HIGH);		// turn off led */
+		}
+		return false;
 	}
 }
