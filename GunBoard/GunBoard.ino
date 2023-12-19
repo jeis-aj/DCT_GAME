@@ -13,7 +13,7 @@
 IRsend irsend;
 
 const int max_attempt_count = 8;		 // Max attempt for a person
-const int trigger_pin = 6;			// Trigger button pin
+const int trigger_pin = 2;			// Trigger button pin
 int Reloading_ledPin = 13;			// Reloading LED Indicator 
 int led_arr[max_attempt_count] = {4,5,6,7,8,9,10,11};			// led pins
 

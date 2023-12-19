@@ -16,7 +16,8 @@
 
 
 int max_index = sizeof(sensor_arr)/sizeof(sensor_arr[0]);		// max node count 
-class node *node_ptr;
+
+class node *node_ptr = malloc( sizeof(node)*max_index );		// mem alloc for node pointers
 
 void setup(){
 	ir_setup();
@@ -26,7 +27,9 @@ void setup(){
 	for( int index = 0; index < max_index ; ++index  ){
 		int sensor_pin = sensor_arr[index]	;
 		int led_pin = led_arr[index]	;
-		node_ptr[index] = node(led_pin, sensor_pin);
+		static node Node1(led_pin, sensor_pin);
+		/* node_ptr[index] =  n1.this; */
+		node_ptr[index]  = &Node1;
 	}
 }
 
@@ -88,4 +91,4 @@ bool node::detect_shot(void){
 			return trigger;
 		}
 	}
-
+}

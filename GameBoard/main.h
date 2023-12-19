@@ -16,8 +16,8 @@
 #include <IRremote.h>
 class node {
 	private:
-		const int led_pin ;
-		const int sensor_pin ;
+		int led_pin ;
+		int sensor_pin ;
 		int state = false;		// LED light off
 		int min_on_time = 500;
 		int max_on_time = 1000;
@@ -26,7 +26,7 @@ class node {
 		int max_off_time = 1000;
 		unsigned long int on_time;
 		unsigned long int off_time;
-		IRrecv irrecv(sensor_pin);
+		IRrecv *irrecv_ptr;
 		decode_results results;
 	public:
 		// create and initialize LED TARGET Nodes
@@ -35,6 +35,10 @@ class node {
 		void update(void);
 		bool  shot_check(int trigger);
 		bool detect_shot(void);
+
+	void * operator=( const node& arg){
+		return &arg;
+	}
 };
 bool detect_shot(void);
 void ir_setup(void);
