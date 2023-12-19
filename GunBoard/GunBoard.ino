@@ -4,7 +4,7 @@
  *		code intented: Gun 
  *		date: 18-12-2023 Monday
  *----------------------------------------------------------------*/
-
+  
 /*----------------------------------------------------------------*/
 
 // ir blaster pin 3 ////
@@ -34,8 +34,8 @@ bool isExecuted = false;
 void loop() {
 	curr_state = digitalRead(trigger_pin);
 
-	if ( curr_state  ){ isExecuted = false; }
 	if (curr_state || isExecuted ){ return;  }
+	if ( curr_state  ){ isExecuted = false; }
 
 	delay(100);
 	isExecuted = true;
@@ -62,6 +62,7 @@ void loop() {
 	}
 
 }
+
 #define max_animation_count 5
 void reload_animation(void) {
 	for ( int count = 0; count < max_animation_count ; ++count ){
