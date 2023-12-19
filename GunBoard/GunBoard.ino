@@ -21,23 +21,26 @@ void setup()
 {
 	for(int led_pin: led_arr){
 		pinMode( led_pin, OUTPUT );
+		digitalWrite( led_pin, HIGH);
+		delay(100);
 	}
 	pinMode( trigger_pin, INPUT_PULLUP);
 }
 
 int count = 0 ;
-int prev_state = true, curr_state = false;
+int curr_state = true;
+bool isExecuted = false;
 
 void loop() {
-	curr_state = digitalRead(trigger_pin) == HIGH;
-	if ( !curr_state && prev_state == curr_state )
-		return;
-	else
-		delay(100);
-	prev_state = curr_state;
+	curr_state = digitalRead(trigger_pin);
+
+	if (curr_state || isExecuted ){ return;  }
+	if ( curr_state  ){ isExecuted = false; }
+
+	delay(100);
+	isExecuted = true;
 
 	if ( count < max_attempt_count  ){
-		digitalWrite( Reloading_ledPin, LOW);
 		Serial.print("Bullet....");
 		Serial.println(count);
 		irsend.sendNEC(0xAF5E827, 32);
@@ -72,4 +75,5 @@ void reload_animation(void) {
 			delay(100);
 		}
 	}
+		digitalWrite( Reloading_ledPin, LOW);
 }
