@@ -20,16 +20,15 @@ int max_index = sizeof(sensor_arr)/sizeof(sensor_arr[0]);		// max node count
 class node *node_ptr = malloc( sizeof(node)*max_index );		// mem alloc for node pointers
 
 void setup(){
-	ir_setup();
 	pinMode( scoredIndicator, OUTPUT);
 	Serial.begin(9600);
 	pinMode (reset_btn , INPUT_PULLUP);
 	for( int index = 0; index < max_index ; ++index  ){
 		int sensor_pin = sensor_arr[index]	;
 		int led_pin = led_arr[index]	;
-		static node Node1(led_pin, sensor_pin);
+		
 		/* node_ptr[index] =  n1.this; */
-		node_ptr[index]  = &Node1;
+		node_ptr[index]  =*(new node(led_pin, sensor_pin));
 	}
 }
 
