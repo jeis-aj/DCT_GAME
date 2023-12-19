@@ -1,11 +1,16 @@
 #include <Arduino.h>
-#include "PinDefinitionsAndMore.h"
+// #include "PinDefinitionsAndMore.h"
 #include <IRremote.hpp> // include the library
 
 
+#define IR_SEND_PIN 3
+
+uint8_t sCommand = 0x34;
+uint8_t sRepeats = 0;
+
 void ir_setup() {
     Serial.begin(115200);
-    ISender.begin(DISABLE_LED_FEEDBACK); // Start with IR_SEND_PIN as send pin and disable feedback LED at default feedback LED pin
+    IrSender.begin(DISABLE_LED_FEEDBACK); // Start with IR_SEND_PIN as send pin and disable feedback LED at default feedback LED pin
     // Just to know which program is running on my Arduino
     Serial.println(IR_SEND_PIN);
 }
