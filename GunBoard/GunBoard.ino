@@ -8,9 +8,6 @@
 /*----------------------------------------------------------------*/
 
 // ir blaster pin 3 ////
-#include <IRremote.h>
-
-IRsend irsend;
 
 const int max_attempt_count = 9;		 // Max attempt for a person
 const int trigger_pin = 2;			// Trigger button pin
@@ -19,6 +16,7 @@ int led_arr[max_attempt_count] = {4,5,6,7,8,9,10,11,12};			// led pins
 
 void setup()
 {
+	irSetup();
 	for(int led_pin: led_arr){
 		pinMode( led_pin, OUTPUT );
 		digitalWrite( led_pin, HIGH);
@@ -34,8 +32,8 @@ bool isExecuted = false;
 void loop() {
 	curr_state = digitalRead(trigger_pin);
 
-	if (curr_state || isExecuted ){ return;  }
 	if ( curr_state  ){ isExecuted = false; }
+	if (curr_state || isExecuted ){ return;  }
 
 	delay(100);
 	isExecuted = true;
@@ -43,7 +41,8 @@ void loop() {
 	if ( count < max_attempt_count  ){
 		Serial.print("Bullet....");
 		Serial.println(count);
-		irsend.sendNEC(0xAF5E827, 32);
+		/* irsend.sendNEC(0xAF5E827, 32); */
+		sendSignal();
 		digitalWrite( led_arr[count], LOW);
 		++count;
 	}
