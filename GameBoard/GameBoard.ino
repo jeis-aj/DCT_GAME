@@ -37,7 +37,7 @@ void loop(){
 			score = 0;
 			return; }
 		node_ptr[index].update();					// update led status (toggle random time)
-		bool isScored  = node_ptr[index].shot_check(detect_shot());					// update score if shot on target, return true if scored
+		bool isScored  = node_ptr[index].detect_shot();					// update score if shot on target, return true if scored
 		if ( isScored ){
 			digitalWrite( scoredIndicator, HIGH );
 			score++;
@@ -66,13 +66,6 @@ void node::update(void){
 	}
 }
 
-bool  node::shot_check(int trigger){
-	if ( trigger && state){
-		state = false;					// turn off led == status false
-		digitalWrite( led_pin, 	HIGH   );		// turn off led
-		return 1; }
-	return 0;	
-}
 
 node::node(int led_pin , int sensor_pin ) {
 	this->led_pin = led_pin;
@@ -80,6 +73,19 @@ node::node(int led_pin , int sensor_pin ) {
 	digitalWrite( led_pin, 	HIGH   );	// led ON
 	pinMode(   led_pin, 	OUTPUT );
 	pinMode(   sensor_pin , INPUT  );
+	irrecv_ptr = new IRrecv(sensor_pin);
+	irrecv_ptr->enableIRIn();
 }
 
+bool node::detect_shot(void){
+	if (irrecv_ptr->decode(&results)){
+		Serial.println(results.value, HEX);				// prints received value 
+		irrecv_ptr->resume();
+		bool trigger = results.value == SecretKey ;
+		if ( trigger && state){
+			state = false;					// turn off led == status false
+			digitalWrite( led_pin, 	HIGH   );		// turn off led
+			return trigger;
+		}
+	}
 
