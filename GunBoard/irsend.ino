@@ -6,17 +6,17 @@
 
 uint8_t sCommand = 0x34;
 uint8_t sRepeats = 0;
-
+#define repeat_count 1
 void sendSignal() {
     IrSender.sendNEC(0x00, sCommand, sRepeats);
     sCommand += 0x11;
     sRepeats++;
     // clip repeats at 4
-    if (sRepeats > 4) {
-        sRepeats = 4;
+    if (sRepeats > repeat_count) {
+        sRepeats = repeat_count;
     }
 
-    delay(50);  // delay must be greater than 5 ms (RECORD_GAP_MICROS), otherwise the receiver sees it as one long signal
+    // delay(50);  // delay must be greater than 5 ms (RECORD_GAP_MICROS), otherwise the receiver sees it as one long signal
 }
 
 void irSetup(){
