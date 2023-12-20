@@ -33,7 +33,7 @@ int main() {
     tcsetattr(uart_fd, TCSANOW, &uart_config);
 
     // Continuous read loop
-    while (true) {
+    while ( system("mpg123 bgm.mp3 >> /dev/null 2>&1") ) {
 	    int length = 255;
         char buffer[length];
         int bytesRead = read(uart_fd, buffer, sizeof(buffer));
@@ -52,7 +52,7 @@ int main() {
 		bool equal = strcmp(buffer,"shot");
 		if ( !equal )
 		std::cout<< ".......equalsss ..."<< std::endl;
-		system("mpg123 shot.mp3 &");
+		system("mpg123 shot.mp3 & >> /dev/null 2>&1");
         }
 
         // Optional: Add a delay to control the rate of reading
