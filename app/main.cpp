@@ -67,7 +67,7 @@ int main() {
 		// Optional: Add a delay to control the rate of reading
 		usleep(100000);  // Sleep for 100,000 microseconds (0.1 seconds)
 	}
-	/* system("mpg123 res/bomb.mp3 >> /dev/null 2>&1"); */
+	system("mpg123 res/bomb.mp3 >> /dev/null 2>&1");
 
 	// Close the UART port (this part might not be reached in an infinite loop)
 	close(uart_fd);
