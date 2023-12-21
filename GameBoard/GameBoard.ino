@@ -21,6 +21,7 @@ class node *node_ptr = malloc( sizeof(node)*max_index );		// mem alloc for node 
 
 void setup(){
 	pinMode( scoredIndicator, OUTPUT);
+	pinMode( reset_btn , INPUT_PULLUP );
 	Serial.begin(115200);
 	pinMode (reset_btn , INPUT_PULLUP);
 	for( int index = 0; index < max_index ; ++index  ){
@@ -36,7 +37,7 @@ int score = 0;
 void loop(){
 		// update led status (toggle random time)
 		for ( int index = 0 ; index < max_index ; ++index ){
-		if (reset_btn == 0){
+		if (digitalRead( reset_btn ) == 0){
 			score = 0;
 			return; }
 		node_ptr[index].update();					// update led status (toggle random time)
