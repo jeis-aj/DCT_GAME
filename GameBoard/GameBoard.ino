@@ -29,21 +29,20 @@ void setup(){
 }
 
 void loop(){
+	bool shot_detected = 0;
+
 	// update led status (toggle random time)
 	for ( int index = 0 ; index < max_index ; ++index ){
-
 		// update score if shot on 'On target' 
 		if ( digitalRead( game_switch_btn ) == 0){
-			node_ptr[index].target_shot();	} 
+			shot_detected = node_ptr[index].target_shot();	} 
 
 		// shot to light target, score if shot on any target 
 		else {
-			node_ptr[index].shot_check();	}
+			shot_detected = node_ptr[index].shot_check();
+		}
 
-		if ( digitalRead ( game_score_chk_btn ) == 0 ){
-			node_ptr[index].score_check(true); }	// if true passed, game over when 10 scored
-
-	}
+			score_check( shot_detected  ); }	// if true passed, game over when 10 scored
 }
 
 void node::random_update(void){
@@ -69,7 +68,6 @@ node::node(int led_pin , int sensor_pin ) {
 	digitalWrite( led_pin, 	HIGH   );	// led ON
 	pinMode(   led_pin, 	OUTPUT );
 	pinMode(   sensor_pin , INPUT  );
-	score = 0;
 }
 
 bool node::target_shot(void){
@@ -77,7 +75,6 @@ bool node::target_shot(void){
 	bool trigger =  !digitalRead (sensor_pin) ;	// ir shot detect == true
 	if ( trigger && state){		// detects shot if, for particular node led on and shot on node
 		on_time -= max_on_time;	// trick time to turn off led, shot on target - led off
-		score++;
 		Serial.print("shot");				// prints received value 
 		/* delay(trigg_delay); */
 		return true;
@@ -85,15 +82,24 @@ bool node::target_shot(void){
 	return false;
 }
 
-void node::shot_check( void  ){
-		if (  digitalRead( sensor_pin ) == 0 ){
-			digitalWrite( led_pin , LOW );
-			Serial.print("shot");
-			score++;
-			delay(trigg_delay);
-		}
-			digitalWrite( led_pin , HIGH);
+bool node::shot_check( void  ){
+	if (  digitalRead( sensor_pin ) == 0 ){
+		digitalWrite( led_pin , LOW );
+		Serial.print("shot");
+		delay(trigg_delay);
+		digitalWrite( led_pin , HIGH);
+		return true;
+	}
+	digitalWrite( led_pin , HIGH);
+	return false;
 }
 
-void node::score_check(int enable)		// if true passed, game over when scored '10'
-	{ while( enable && score > 9 ); }
+void score_check(int trigger )		// if true passed, game over when scored '10'
+{ 
+	static int score = 0;
+	if ( trigger ){
+		score++; }
+	while( score > 9 ); 
+}
+
+
