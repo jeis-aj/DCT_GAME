@@ -3,6 +3,7 @@
 using namespace std;
 
 void display(int number);
+/*
 int main(){
 	int num;
 	while (1){
@@ -10,8 +11,9 @@ int main(){
 		scanf("%d",&num);
 		display(num);
 	}
-	/* while ( system("mpg123 bgm.mp3 >> /dev/null 2>&1") ){ } */
+//	while ( system("mpg123 bgm.mp3 >> /dev/null 2>&1") ){ }
 }
+*/
 void display(int number){
 	system("clear");
 	system("echo '\n'");

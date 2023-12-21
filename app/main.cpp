@@ -4,8 +4,11 @@
 #include <unistd.h>
 #include <cstdlib>
 #include <cstring>
+
+void display(int );
 std::string secretMsg = "shot3";
 
+int score = 0;
 int main() {
 	// Open the UART port
 	/* int uart_fd = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY); */
@@ -36,35 +39,36 @@ int main() {
 	// Continuous read loop
 	int length = 255;
 	char buffer[length];
-	int bytesRead = read(uart_fd, buffer, sizeof(buffer));
 
-	while ( system("mpg123 res/bgm.mp3 >> /dev/null 2>&1") ) {
-		/* while (1) { */
-		/* while ( system("mpg123 res/bgm.mp3 ") ) { */
-		std::cout << "init "<< std::endl << std::flush;
+	std::streambuf *coutBuffer = std::cout.rdbuf();
+
+	 system("nohup mpg123 res/bgm.mp3 &") ;
+
+	while (1) {
+    // Restore the original cout stream buffer
+    std::cout.rdbuf(coutBuffer);
+
+	int bytesRead = read(uart_fd, buffer, sizeof(buffer));
 		if (bytesRead == -1) {
-			std::cout << "uart problem"<< std::endl << std::flush;
-			if (bytesRead == -1) {
-				// Handle the error
-				std::cerr << "Error reading from UART. Error code: " << errno << ", Message: " << strerror(errno) << std::endl <<std::flush;
-				/* close(uart_fd); */
-				/* return -1; */
-			usleep(10000); 
-			}
 			usleep(10000); }
 		// Display the received data
 		if (bytesRead > 0) {
+			if ( score > 9 ){
+				display(10);
+				break; }
+			++score;
+			display(score);
 			std::string msg = std::string(buffer, bytesRead) ;
-			std::cout << "Received data: " << msg <<"by" << bytesRead << std::flush;
-			bool equal = strcmp(buffer,"shot");
-			system("nohup mpg123 res/shot.mp3 & >> /dev/null 2>&1");
-			/* system("nohup mpg123 res/shot.mp3 & "); */
+			/* std::cout << "Received data: " << msg <<"by" << bytesRead << std::flush; */
+		    std::cout.rdbuf(coutBuffer);
+		/* system("nohup mpg123 res/shot.mp3 & >> /dev/null 2>&1"); */
 		}
 
 		// Optional: Add a delay to control the rate of reading
 		usleep(100000);  // Sleep for 100,000 microseconds (0.1 seconds)
 	}
-	system("mpg123 res/bomb.mp3 >> /dev/null 2>&1");
+	/* system("mpg123 res/bomb.mp3 >> /dev/null 2>&1"); */
+
 	// Close the UART port (this part might not be reached in an infinite loop)
 	close(uart_fd);
 
