@@ -42,10 +42,10 @@ void ir_setup(void);
 /* --------------------------------------------------------------------------------- */
 /* SCALABLE PARAMETERS */
 int scoredIndicator = 28;
-/* int sensor_arr [9] = { 1,2,3,4,5,6,7,8,9 }; */
-/* int led_arr [9] = { 11, 12, 13, 14, 15, 16, 17, 18,19 }; */
-int sensor_arr [1] = { 2 };
-int led_arr [1] = { 7 };
-const int reset_btn = 25;
+int led_arr [6] = { 7,6,5,4,3,2 };
+int sensor_arr [6] = { 14, 15 ,16, 17, 18, 19 };
+/* int sensor_arr [1] = { 2 }; */
+/* int led_arr [1] = { 7 }; */
+const int reset_btn = 24;
 #define SecretKey 0xFFFFFFFF 
 /* --------------------------------------------------------------------------------- */

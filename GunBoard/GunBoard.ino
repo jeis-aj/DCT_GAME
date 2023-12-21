@@ -17,7 +17,7 @@ int led_arr[max_attempt_count] = {4,5,6,7,8,9,10,11,12};			// led pins
 
 void setup()
 {
-	Serial.begin(115200);
+	Serial.begin(9600);
 	irSetup();
 	for(int led_pin: led_arr){
 		pinMode( led_pin, OUTPUT );
