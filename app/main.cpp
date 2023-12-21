@@ -53,11 +53,11 @@ int main() {
 			usleep(10000); }
 		// Display the received data
 		if (bytesRead > 0) {
-			if ( score > 9 ){
-				display(10);
+			if ( score <= 10 ){
+				display(score); }
+			else{
 				break; }
 			++score;
-			display(score);
 			std::string msg = std::string(buffer, bytesRead) ;
 			/* std::cout << "Received data: " << msg <<"by" << bytesRead << std::flush; */
 		    std::cout.rdbuf(coutBuffer);
@@ -65,7 +65,7 @@ int main() {
 		}
 
 		// Optional: Add a delay to control the rate of reading
-		usleep(100000);  // Sleep for 100,000 microseconds (0.1 seconds)
+		usleep(200000);  // Sleep for 100,000 microseconds (0.1 seconds)
 	}
 	system("mpg123 res/bomb.mp3 >> /dev/null 2>&1");
 

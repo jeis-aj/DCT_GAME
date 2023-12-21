@@ -73,7 +73,7 @@ node::node(int led_pin , int sensor_pin ) {
 
 bool node::detect_shot(void){
 	if (irrecv_ptr->decode(&results)){
-		Serial.println(results.value, HEX);				// prints received value 
+		/* Serial.println(results.value, HEX);				// prints received value */ 
 		irrecv_ptr->resume();
 		/* bool trigger = (results.value == SecretKey); */
 		bool trigger = true ;
@@ -82,11 +82,8 @@ bool node::detect_shot(void){
 			/* digitalWrite( led_pin, 	HIGH);		// turn off led */
 			on_time -= max_on_time;							// trick time to turn off led, shot on target - led off
 			Serial.print("shot");				// prints received value 
+			delay(30);
 			return true;
-		}
-		else{
-			delay(100);
-			/* digitalWrite( led_pin, 	HIGH);		// turn off led */
 		}
 		return false;
 	}

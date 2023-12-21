@@ -33,7 +33,7 @@ bool isExecuted = false;
 
 void loop() {
 	curr_state = digitalRead(trigger_pin);
-
+  delay(60);
 	if ( curr_state  ){ isExecuted = false; }
 	if (curr_state || isExecuted ){ return;  }
 
