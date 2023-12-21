@@ -42,7 +42,9 @@ void loop(){
 			shot_detected = node_ptr[index].shot_check();
 		}
 
-			score_check( shot_detected  ); }	// if true passed, game over when 10 scored
+		if ( digitalRead (game_score_chk_btn) == 0 )
+			score_check( shot_detected  ); 	// if true passed, game over when 10 scored
+	}
 }
 
 void node::random_update(void){
