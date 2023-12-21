@@ -14,6 +14,9 @@
 #include <time.h> 
 #include "main.h"
 
+
+int max_index = sizeof(sensor_arr)/sizeof(sensor_arr[0]);		// max node count 
+
 class node *node_ptr = malloc( sizeof(node)*max_index );		// mem alloc for node pointers
 
 void setup(){
@@ -49,12 +52,10 @@ void loop(){
 		}
 	}
 		 */
-		node_ptr[index].ledOn();
 	/* Serial.print("Score: "); */
 	/* Serial.println(score); */
 }
 
-}
 void node::update(void){
 	unsigned long int time  = millis();
 	/* Serial.println(on_time); */
@@ -105,11 +106,5 @@ bool node::detect_shot(void){
 }
 
 void node::ledOn(){
-	if (irrecv_ptr->decode(&results)){
-		Serial.println(results.value, HEX);				// prints received value 
-		irrecv_ptr->resume();
-		pinMode(led_pin, LOW);
-		delay(1000);
-	}
-		pinMode(led_pin, HIGH);
+	pinMode(led, LOW);
 }

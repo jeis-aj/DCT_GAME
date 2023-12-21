@@ -35,6 +35,7 @@ class node {
 		void update(void);
 		bool  shot_check(int trigger);
 		bool detect_shot(void);
+		void ledOn(void);
 };
 bool detect_shot(void);
 void ir_setup(void);
@@ -42,8 +43,9 @@ void ir_setup(void);
 /* --------------------------------------------------------------------------------- */
 /* SCALABLE PARAMETERS */
 int scoredIndicator = 28;
-int led_arr [6] = { 7,6,5,4,3,2 };
-int sensor_arr [6] = { 14, 15 ,16, 17, 18, 19 };
+#define max_index 6		// max node count 
+int led_arr [ max_index ] = { 7,6,5,4,3,2 };
+int sensor_arr [ max_index  ] = { 14, 15 ,16, 17, 18, 19 };
 /* int sensor_arr [1] = { 2 }; */
 /* int led_arr [1] = { 7 }; */
 const int reset_btn = 24;
