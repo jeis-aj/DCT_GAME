@@ -25,13 +25,13 @@ class node {
 		int max_off_time = 1000;
 		unsigned long int on_time = 0;
 		unsigned long int off_time = 0;
-		static int score = 0;
 	public:
+		static int score ;
 		// create and initialize LED TARGET Nodes
 		node(int led_pin , int sensor_pin );
 		// update function update led on/off for random time
 		void random_update(void);
-		bool  shot_check(int trigger);	// 'led on' if shot detects on that node
+		void shot_check( void  );	// 'led on' if shot detects on that node
 		bool target_shot(void);			// 'led off' if shot detects on 'random time' On led  
 		void score_check(int enable);		// if true passed, game over when scored '10'
 };

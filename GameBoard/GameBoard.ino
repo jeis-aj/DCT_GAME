@@ -69,6 +69,7 @@ node::node(int led_pin , int sensor_pin ) {
 	digitalWrite( led_pin, 	HIGH   );	// led ON
 	pinMode(   led_pin, 	OUTPUT );
 	pinMode(   sensor_pin , INPUT  );
+	score = 0;
 }
 
 bool node::target_shot(void){
@@ -84,7 +85,7 @@ bool node::target_shot(void){
 	return false;
 }
 
-void node::shot_check(){
+void node::shot_check( void  ){
 		if (  digitalRead( sensor_pin ) == 0 ){
 			digitalWrite( led_pin , LOW );
 			Serial.print("shot");
