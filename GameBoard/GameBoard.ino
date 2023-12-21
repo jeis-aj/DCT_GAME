@@ -40,12 +40,13 @@ void loop(){
 		if (digitalRead( reset_btn ) == 0){
 			score = 0;
 			return; }
-		node_ptr[index].update();					// update led status (toggle random time)
-		bool isScored  = node_ptr[index].detect_shot();					// update score if shot on target, return true if scored
+		node_ptr[in		bool isScored  = node_ptr[index].detect_shot();					// update score if shot on target, return true if scored
+dex].update();					// update led status (toggle random time)
 		if ( isScored ){
 			digitalWrite( scoredIndicator, HIGH );
 			score++;
-		}
+		}		bool isScored  = node_ptr[index].detect_shot();					// update score if shot on target, return true if scored
+
 		else{
 			digitalWrite( scoredIndicator, HIGH );
 		}
