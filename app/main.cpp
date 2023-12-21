@@ -40,24 +40,28 @@ int main() {
 	int length = 255;
 	char buffer[length];
 
-	/* while ( system("nohup mpg123 res/bgm.mp3 &>> /dev/null 2>&1") ) { */
+	std::streambuf *coutBuffer = std::cout.rdbuf();
+
+	 system("nohup mpg123 res/bgm.mp3 &") ;
+
 	while (1) {
+    // Restore the original cout stream buffer
+    std::cout.rdbuf(coutBuffer);
+
 	int bytesRead = read(uart_fd, buffer, sizeof(buffer));
 		if (bytesRead == -1) {
-			/* std::cout << "uart problem"<< std::endl << std::flush; */
-				// Handle the error
-				/* std::cerr << "Error reading from UART. Error code: " << errno << ", Message: " << strerror(errno) << std::endl <<std::flush; */
 			usleep(10000); }
 		// Display the received data
 		if (bytesRead > 0) {
 			if ( score > 9 ){
 				display(10);
-				score = 0; }
+				break; }
 			++score;
 			display(score);
 			std::string msg = std::string(buffer, bytesRead) ;
 			/* std::cout << "Received data: " << msg <<"by" << bytesRead << std::flush; */
-			/* system("nohup mpg123 res/shot.mp3 & >> /dev/null 2>&1"); */
+		    std::cout.rdbuf(coutBuffer);
+		/* system("nohup mpg123 res/shot.mp3 & >> /dev/null 2>&1"); */
 		}
 
 		// Optional: Add a delay to control the rate of reading
