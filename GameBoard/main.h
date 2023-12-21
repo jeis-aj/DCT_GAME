@@ -19,11 +19,11 @@ class node {
 		int led_pin ;
 		int sensor_pin ;
 		int state = false;		// LED light off
-		int min_on_time = 200;
-		int max_on_time = 800;
+		int min_on_time = 1000;
+		int max_on_time = 2000;
 
-		int min_off_time = 1000;
-		int max_off_time = 4000;
+		int min_off_time = 500;
+		int max_off_time = 1000;
 		unsigned long int on_time = 0;
 		unsigned long int off_time = 0;
 		IRrecv *irrecv_ptr;
