@@ -61,7 +61,7 @@ int main() {
 			std::string msg = std::string(buffer, bytesRead) ;
 			/* std::cout << "Received data: " << msg <<"by" << bytesRead << std::flush; */
 		    std::cout.rdbuf(coutBuffer);
-		/* system("nohup mpg123 res/shot.mp3 & >> /dev/null 2>&1"); */
+		system("nohup mpg123 res/shot.mp3 &");
 		}
 
 		// Optional: Add a delay to control the rate of reading
