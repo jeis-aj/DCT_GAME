@@ -34,7 +34,9 @@ void loop(){
 	// update led status (toggle random time)
 	for ( int index = 0 ; index < max_index ; ++index ){
 		// update score if shot on 'On target' 
-		if ( digitalRead( game_switch_btn ) == 0){
+		bool is_target_shot_mode = digitalRead( game_switch_btn ) == 0;
+
+		if ( is_target_shot_mode ){
 			shot_detected = node_ptr[index].target_shot();	} 
 
 		// shot to light target, score if shot on any target 
@@ -78,6 +80,7 @@ bool node::target_shot(void){
 	if ( trigger && state){		// detects shot if, for particular node led on and shot on node
 		on_time -= max_on_time;	// trick time to turn off led, shot on target - led off
 		Serial.print("shot");				// prints received value 
+		state = false;
 		/* delay(trigg_delay); */
 		return true;
 	}
