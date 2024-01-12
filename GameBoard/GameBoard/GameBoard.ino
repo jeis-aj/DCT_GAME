@@ -80,7 +80,7 @@ bool node::target_shot(void){
 	if ( trigger && state){		// detects shot if, for particular node led on and shot on node
 		on_time -= max_on_time;	// trick time to turn off led, shot on target - led off
 		Serial.print("shot");				// prints received value 
-		state = false;
+		/* state = false; */
 		/* delay(trigg_delay); */
 		return true;
 	}
