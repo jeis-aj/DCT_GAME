@@ -8,7 +8,7 @@
 void display(int );
 std::string secretMsg = "shot3";
 
-int score = 0;
+int score = 1;
 int main() {
 	// Open the UART port
 	/* int uart_fd = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY); */
@@ -44,6 +44,7 @@ int main() {
 
 	 system("nohup mpg123 res/bgm.mp3 &") ;
 
+	display(0); 
 	while (1) {
     // Restore the original cout stream buffer
     std::cout.rdbuf(coutBuffer);
@@ -53,11 +54,13 @@ int main() {
 			usleep(10000); }
 		// Display the received data
 		if (bytesRead > 0) {
-			if ( score <= 10 ){
-				display(score); }
-			else{
-				break; }
+			if ( score < 10 ){
+			display(score); 
 			++score;
+			}
+			else{
+			display(score); 
+				break; }
 			std::string msg = std::string(buffer, bytesRead) ;
 			/* std::cout << "Received data: " << msg <<"by" << bytesRead << std::flush; */
 		    std::cout.rdbuf(coutBuffer);
